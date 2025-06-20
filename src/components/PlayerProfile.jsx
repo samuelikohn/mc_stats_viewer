@@ -20,6 +20,8 @@ export default function PlayerProfile(props) {
         {id: 'minecraft:custom', label: 'Miscellaneous'},
     ]
 
+    const data = currentStat ? props.player.stats[currentStat].filter((datum) => datum.value > 0).sort((a, b) => {return b.value - a.value}) : null
+
     return (
         <>
             <button onClick={() => props.resetPlayer(null)}>Back to Player List</button>
@@ -39,16 +41,9 @@ export default function PlayerProfile(props) {
                     {
                         currentStat &&
                         <BarChart
-                            width={1000 * currentStat.length}
+                            width={100 * data.length}
                             height={500}
-                            data={
-                                Object
-                                .entries(props.player.stats[currentStat])
-                                .map(([name, value]) => ({name, value}))
-                                .sort((a, b) => {
-                                    return b.value - a.value
-                                })
-                            }
+                            data={data}
                         > 
                             <Bar dataKey='value' fill='#8932b8'/>
                         </BarChart>

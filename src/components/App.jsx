@@ -2,6 +2,7 @@ import UploadPage from './UploadPage.jsx'
 import PlayerList from './PlayerList.jsx'
 import PlayerProfile from './PlayerProfile.jsx'
 import { useState } from 'react'
+import '../styles/App.css'
 
 export default function App() {
 	const initialPlayerData = localStorage.getItem('playerProfiles')
@@ -9,6 +10,7 @@ export default function App() {
 	const [playerData, setPlayerData] = useState(initialPlayerData ? JSON.parse(initialPlayerData) : null)
 	const [worldName, setWorldName] = useState(initialWorldName ? initialWorldName : null)
 	const [activePlayer, setActivePlayer] = useState(null)
+	const [isLoading, setIsLoading] = useState(false)
 
 	function getPlayerDataFromStorage() {
 		const storedPlayerData = localStorage.getItem('playerProfiles')
@@ -24,6 +26,10 @@ export default function App() {
 		setActivePlayer(player)
 	}
 
+	function toggleLoadingAnim(val) {
+		setIsLoading(val)
+	}
+
 	return (
 		<>
 			{
@@ -34,15 +40,20 @@ export default function App() {
 				/>
 			}
 			{
-				!activePlayer &&
-				playerData &&
-				<PlayerList
-					getPlayerData={getPlayerDataFromStorage}
-					getWorldName={getWorldNameFromStorage}
-					playerData={playerData}
-					worldName={worldName}
-					getPlayer={goToPlayerProfile}
-				/>
+				isLoading ?	
+				<div className='loading-anim'></div> :
+				(
+					!activePlayer &&
+					playerData &&
+					<PlayerList
+						getPlayerData={getPlayerDataFromStorage}
+						getWorldName={getWorldNameFromStorage}
+						playerData={playerData}
+						worldName={worldName}
+						getPlayer={goToPlayerProfile}
+						isLoading={setIsLoading}
+					/>
+				)
 			}
 			{
 				activePlayer &&

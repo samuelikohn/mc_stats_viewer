@@ -1,0 +1,18 @@
+.loading-anim {
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: cycle-svgs 4s infinite steps(7);
+}
+
+@keyframes cycle-svgs {
+    0% { background-image: url('/src/assets/loading-anim/0.svg'); }
+    14.29% { background-image: url('/src/assets/loading-anim/1.svg'); }
+    28.57% { background-image: url('/src/assets/loading-anim/2.svg'); }
+    42.86% { background-image: url('/src/assets/loading-anim/3.svg'); }
+    57.14% { background-image: url('/src/assets/loading-anim/4.svg'); }
+    71.43% { background-image: url('/src/assets/loading-anim/5.svg'); }
+    85.71% { background-image: url('/src/assets/loading-anim/6.svg'); }
+    100% { background-image: url('/src/assets/loading-anim/0.svg'); }
+}

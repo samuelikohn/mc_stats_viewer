@@ -7,6 +7,7 @@ export default function PlayerList(props) {
 			<FolderUpload
                 getPlayerData={props.getPlayerData}
                 getWorldName={props.getWorldName}
+                isLoading={props.isLoading}
 			/>
             <h1>View player stats for {props.worldName}</h1>
             {
