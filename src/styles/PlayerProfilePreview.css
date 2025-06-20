@@ -1,0 +1,21 @@
+.profile-picture {
+    width: 6rem;
+    height: 6rem;
+    overflow: hidden;
+    border: 0.125rem solid black;
+    border-radius: 0.75rem;
+}
+
+.profile-picture img { 
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+    width: auto;
+    height: auto;
+    transform-origin: top left;
+    transform: translate(-6rem, -6rem) scale(12);
+}
+
+.player-profile {
+    border: 0.125rem solid black;
+    border-radius: 0.75rem;
+}
