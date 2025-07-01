@@ -130,6 +130,9 @@ export default function FolderUpload(props) {
             // Start loading animation
             props.isLoading(true)
 
+            // Clear error if exists
+            props.setError("")
+
             // Get world name from folder name
             const worldName = getWorldName(event)
 
@@ -138,7 +141,7 @@ export default function FolderUpload(props) {
 
             // Display error if no files found
             if (filteredFiles.length === 0) {
-                // TODO throw error and display
+                throw new Error('No valid stats files found')
             }
 
             // Get obj of stats by UUID from files
@@ -146,7 +149,7 @@ export default function FolderUpload(props) {
 
             // Display error if no files uploaded and parsed
             if (Object.keys(allStats).length === 0) {
-                // TODO throw error and display
+                throw new Error('Failed to parse selected stats files')
             }
 
             // Get player profile data
@@ -157,7 +160,7 @@ export default function FolderUpload(props) {
                 playerProfiles.push(profile)
             }
 
-            // Data is stored in local storage for persistence
+            // Data is stored in indexed DB for persistence
             await writeToDB('playerProfiles', JSON.stringify(playerProfiles))
             await writeToDB('worldName', worldName)
             props.getPlayerData()
@@ -168,6 +171,7 @@ export default function FolderUpload(props) {
 
         } catch(error) {
             props.isLoading(false)
+            props.setError(error.message)
             console.error(error)
         }
     }

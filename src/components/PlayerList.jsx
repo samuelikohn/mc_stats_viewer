@@ -9,6 +9,7 @@ export default function PlayerList(props) {
                 getWorldName={props.getWorldName}
                 db={props.db}
                 isLoading={props.isLoading}
+                setError={props.setError}
 			/>
             <h1>View player stats for {props.worldName}</h1>
             {

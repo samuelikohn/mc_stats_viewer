@@ -1,9 +1,10 @@
 import FolderUpload from './FolderUpload.jsx'
 
-export default function UploadPage(props) {
+export default function ErrorPage(props) {
     return (
         <>
-            <h1>Get Started</h1>
+            <h1>Error</h1>
+            <p>{props.error}</p>
             <FolderUpload
                 getPlayerData={props.getPlayerData}
                 getWorldName={props.getWorldName}

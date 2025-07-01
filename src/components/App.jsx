@@ -1,6 +1,7 @@
 import UploadPage from './UploadPage.jsx'
 import PlayerList from './PlayerList.jsx'
 import PlayerProfile from './PlayerProfile.jsx'
+import ErrorPage from './ErrorPage.jsx'
 import { useState, useEffect } from 'react'
 import '../styles/App.css'
 
@@ -10,6 +11,7 @@ export default function App() {
 	const [worldName, setWorldName] = useState(null)
 	const [activePlayer, setActivePlayer] = useState(null)
 	const [isLoading, setIsLoading] = useState(false)
+	const [error, setError] = useState("")
 
 	async function getPlayerDataFromStorage() {
 		const storedPlayerData = await readFromDB('playerProfiles')
@@ -102,12 +104,14 @@ export default function App() {
 		<>
 			{
 				!playerData &&
+				!error &&
 				database &&
 				<UploadPage
 					getPlayerData={getPlayerDataFromStorage}
 					getWorldName={getWorldNameFromStorage}
 					isLoading={setIsLoading}
 					db={database}
+					setError={setError}
 				/>
 			}
 			{
@@ -124,6 +128,8 @@ export default function App() {
 						worldName={worldName}
 						getPlayer={goToPlayerProfile}
 						isLoading={setIsLoading}
+						db={database}
+						setError={setError}
 					/>
 				)
 			}
@@ -136,6 +142,20 @@ export default function App() {
 					isLoading={setIsLoading}
 					player={activePlayer}
 					resetPlayer={goToPlayerProfile}
+					db={database}
+					setError={setError}
+				/>
+			}
+			{
+				!playerData &&
+				error &&
+				<ErrorPage
+					getPlayerData={getPlayerDataFromStorage}
+					getWorldName={getWorldNameFromStorage}
+					isLoading={setIsLoading}
+					db={database}
+					setError={setError}
+					error={error}
 				/>
 			}
 		</>

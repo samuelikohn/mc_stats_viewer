@@ -30,6 +30,7 @@ export default function PlayerProfile(props) {
                 getWorldName={props.getWorldName}
                 db={props.db}
                 isLoading={props.isLoading}
+                setError={props.setError}
             />
             <h1>View {props.player.name}'s stats</h1>
             <ButtonSelect
@@ -47,7 +48,7 @@ export default function PlayerProfile(props) {
                             height={500}
                             data={data}
                         > 
-                            <Bar dataKey='value' fill='#8932b8'/>
+                            <Bar dataKey='value' fill='#8932b8' label/>
                         </BarChart>
                     }
                 </ScrollArea.Viewport>
