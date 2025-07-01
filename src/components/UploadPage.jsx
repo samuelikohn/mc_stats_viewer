@@ -7,6 +7,8 @@ export default function UploadPage(props) {
             <FolderUpload
                 getPlayerData={props.getPlayerData}
                 getWorldName={props.getWorldName}
+                db={props.db}
+                isLoading={props.isLoading}
             />
         </>
     )

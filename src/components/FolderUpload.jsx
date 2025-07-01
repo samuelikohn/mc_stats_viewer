@@ -94,7 +94,7 @@ export default function FolderUpload(props) {
             return {
                 'uuid': uuid,
                 'name': uuid,
-                'skin': "src/assets/steve.png"
+                'skin': 'src/assets/steve.png'
             }
 		}
 	}
@@ -158,8 +158,8 @@ export default function FolderUpload(props) {
             }
 
             // Data is stored in local storage for persistence
-            localStorage.setItem('playerProfiles', JSON.stringify(playerProfiles))
-            localStorage.setItem('worldName', worldName)
+            await writeToDB('playerProfiles', JSON.stringify(playerProfiles))
+            await writeToDB('worldName', worldName)
             props.getPlayerData()
             props.getWorldName()
 
@@ -220,6 +220,26 @@ export default function FolderUpload(props) {
 		return fileContents
 	}
 
+    async function writeToDB(key, value) {
+        if (!props.db) {
+            console.error('Database not open yet')
+            return
+        }
+
+        const STORE_NAME = 'MCStatsData'
+        const transaction = props.db.transaction([STORE_NAME], 'readwrite')
+        const objectStore = transaction.objectStore(STORE_NAME)
+        const putRequest = objectStore.put(value, key)
+
+        putRequest.onerror = function(event) {
+            console.error(`Error writing key '${key}':`, event.target.error)
+        }
+
+        transaction.onerror = function(event) {
+            console.error('Transaction error:', event.target.error)
+        }
+    }
+
     return (
         <div>
             <input
@@ -228,11 +248,6 @@ export default function FolderUpload(props) {
                 multiple
                 onChange={handleUpload}
             />
-            {/* TODO 
-                on upload prevent file alert
-                do not erase storage on cancel
-                loading animation
-            */}
         </div>
     )
 }

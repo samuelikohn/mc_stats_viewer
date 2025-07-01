@@ -28,6 +28,8 @@ export default function PlayerProfile(props) {
             <FolderUpload
                 getPlayerData={props.getPlayerData}
                 getWorldName={props.getWorldName}
+                db={props.db}
+                isLoading={props.isLoading}
             />
             <h1>View {props.player.name}'s stats</h1>
             <ButtonSelect
